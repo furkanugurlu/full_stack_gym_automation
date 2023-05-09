@@ -1,13 +1,12 @@
-const express = require("express");
+require('dotenv').config()
+const express = require('express')
+const app = express()
+const { antrenorlerRoute } = require('./route')
 
-const app = express();
+app.use(express.json())
+app.use('/coach', antrenorlerRoute)
 
-const PORT = 3001;
-
-app.get("/", (req, res) => {
-  res.send("SPOR SALONU OTAMASYONU!");
-});
-
+const PORT = process.env.PORT
 app.listen(PORT, () => {
-  console.log(`Sunucu ${PORT}'unda çalıştı`);
-});
+    console.log(`Sunucu http://localhost:${PORT}'unda çalıştı`)
+})
