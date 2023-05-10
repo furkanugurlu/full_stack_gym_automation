@@ -1,10 +1,15 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-const { antrenorlerRoute } = require('./route')
+const { antrenorlerRoute, branslarRoute, kategorilerRoute, esyaRoute, uyelerRoute, paketlerRoute } = require('./route')
 
 app.use(express.json())
 app.use('/coach', antrenorlerRoute)
+app.use('/branch', branslarRoute)
+app.use('/category', kategorilerRoute)
+app.use('/furniture', esyaRoute)
+app.use('/member', uyelerRoute)
+app.use('/package', paketlerRoute)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
