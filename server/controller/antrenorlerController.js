@@ -10,7 +10,8 @@ const coachRead = (req, res) => {
 }
 
 const coachCreate = (req, res) => {
-    const { tcNo, adi, soyadi, mail, telNo, adres, kayitTarihi, dogumTarihi, sifre } = req?.body
+    const { tcNo, adi, soyadi, mail, telNo, adres, dogumTarihi, sifre } = req?.body
+    const kayitTarihi = new Date()
     const query = 'INSERT INTO antrenorler (tcNo,adi,soyadi,mail,telNo,adres,kayitTarihi,dogumTarihi,sifre) VALUES (?,?,?,?,?,?,?,?,?)'
     db.query(query, [tcNo, adi, soyadi, mail, telNo, adres, kayitTarihi, dogumTarihi, sifre], (err, result) => {
         if (!err) {
@@ -20,9 +21,9 @@ const coachCreate = (req, res) => {
 }
 
 const coachUpdate = (req, res) => {
-    const { tcNo, adi, soyadi, mail, telNo, adres, kayitTarihi, dogumTarihi, sifre } = req?.body
-    const query = 'UPDATE antrenorler SET adi = ?,soyadi = ?, mail = ?,telNo = ?, adres = ?, kayitTarihi = ?,dogumTarihi = ?, sifre = ? WHERE tcNo = ?;'
-    db.query(query, [adi, soyadi, mail, telNo, adres, kayitTarihi, dogumTarihi, sifre, tcNo], (err, result) => {
+    const { tcNo, adi, soyadi, mail, telNo, adres, dogumTarihi, sifre } = req?.body
+    const query = 'UPDATE antrenorler SET adi = ?,soyadi = ?, mail = ?,telNo = ?, adres = ?, dogumTarihi = ?, sifre = ? WHERE tcNo = ?;'
+    db.query(query, [adi, soyadi, mail, telNo, adres, dogumTarihi, sifre, tcNo], (err, result) => {
         if (!err) {
             res.send(result)
         }

@@ -1,9 +1,9 @@
 const route = require('express').Router()
-const antrenorlerController = require('../controller/antrenorlerController')
+const { antrenorlerController } = require('../controller')
 
 route.get('/read', antrenorlerController.coachRead)
 route.post('/create', antrenorlerController.coachCreate)
-route.post('/update', antrenorlerController.coachUpdate)
-route.post('/remove', antrenorlerController.coachRemove)
+route.put('/update', antrenorlerController.coachUpdate)
+route.delete('/remove', antrenorlerController.coachRemove)
 
 module.exports = route
