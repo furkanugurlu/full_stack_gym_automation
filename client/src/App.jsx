@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { Route } from "react-router-dom";
+import CustomHeader from "./components/CustomHeader";
+import Router from "./Router";
+
 function App() {
   return (
-    <div className="h-screen flex bg-black text-white">
-      <h4 className="m-auto">SPOR SALONU OTAMASYONU!</h4>
+    <div>
+      <CustomHeader />
+      <div className="pt-[100px]">
+        <Router />
+      </div>
     </div>
   );
 }
