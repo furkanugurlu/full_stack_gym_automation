@@ -1,5 +1,4 @@
-import { Route } from "react-router-dom";
-import CustomHeader from "./components/CustomHeader";
+import { CustomHeader } from "./components";
 import Router from "./Router";
 
 function App() {
