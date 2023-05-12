@@ -9,13 +9,16 @@ const CustomHeader = () => {
   return (
     <header>
       <div className="items-center">
-        <div className="fixed top-[10px] right-[30px] sm:right-[50px]  lg:right-[100px]   cursor-pointer">
-          <span onClick={() => setIsOpen(!isOpen)} className="text-5xl">
+        <div className="fixed top-[10px] right-[10px] sm:right-[50px]  lg:right-[50px] 2xl:right-[100px]   cursor-pointer">
+          <span
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-5xl text-yellow-600"
+          >
             <RxHamburgerMenu />
           </span>
         </div>
         <div className="relative top-[10px]">
-          <span className="text-5xl absolute left-1/2 transform -translate-x-1/2 font-mono">
+          <span className="text-5xl text-yellow-600 font-mono absolute left-1/2 transform -translate-x-1/2">
             ArenaGYM
           </span>
         </div>
@@ -25,12 +28,17 @@ const CustomHeader = () => {
           isOpen ? "opacity-100  w-[100%]" : "w-[0] opacity-0"
         } h-[100vh] text-white flex justify-center items-center  text-[40px] tracking-[1px] overflow-hidden origin-left duration-300`}
       >
-        <div className="fixed top-[10px] right-[30px] sm:right-[50px]  lg:right-[100px]   cursor-pointer">
+        <div className="fixed top-[10px] right-[10px] sm:right-[50px]  lg:right-[50px] 2xl:right-[100px]   cursor-pointer">
           <span onClick={() => setIsOpen(!isOpen)} className="text-5xl">
             <AiOutlineClose className="text-white" />
           </span>
         </div>
         <ul>
+          <li className="">
+            <a href="/" className="nav">
+              Ana Sayfa
+            </a>
+          </li>
           <li className="">
             <a href="/members" className="nav">
               Üyeler

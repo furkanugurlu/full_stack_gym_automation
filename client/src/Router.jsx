@@ -1,6 +1,15 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Branches, Categories, Coaches, Home, Members, Tools } from "./pages";
+import {
+  Branches,
+  Categories,
+  CreateCategories,
+  Coaches,
+  Home,
+  Members,
+  ToolsCreate,
+  Tools,
+} from "./pages";
 
 export default function Router() {
   return (
@@ -10,6 +19,7 @@ export default function Router() {
         <Route path="/members" element={<Members />} />
         <Route path="/branches" element={<Branches />} />
         <Route path="/categories" element={<Categories />} />
+        <Route path="/create-categories" element={<CreateCategories />} />
         <Route path="/coaches" element={<Coaches />} />
         <Route path="/tools" element={<Tools />} />
       </Routes>

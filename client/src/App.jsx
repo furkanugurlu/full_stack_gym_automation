@@ -1,13 +1,14 @@
-import { CustomHeader } from "./components";
+import { CustomHeader, CustomFooter } from "./components";
 import Router from "./Router";
 
 function App() {
   return (
-    <div>
+    <div className="relative">
       <CustomHeader />
       <div className="pt-[100px]">
         <Router />
       </div>
+      <CustomFooter />
     </div>
   );
 }

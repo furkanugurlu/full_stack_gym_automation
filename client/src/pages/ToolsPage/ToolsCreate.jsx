@@ -1,10 +1,10 @@
 import React from "react";
 import { Helmet } from "react-helmet";
 import { Formik, Field, Form } from "formik";
-import { Input, SelectBox } from "../components/FormItems";
-import { ToolsValid } from "../validations";
+import { Input, SelectBox } from "../../components/FormItems";
+import { ToolsValid } from "../../validations";
 
-const Tools = () => {
+const ToolsCreate = () => {
   return (
     <div>
       <Helmet>
@@ -38,4 +38,4 @@ const Tools = () => {
   );
 };
 
-export { Tools };
+export { ToolsCreate };

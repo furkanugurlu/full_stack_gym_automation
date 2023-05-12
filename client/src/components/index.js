@@ -1,2 +1,4 @@
 export * from "./CustomHeader";
-export * from "./CustomTextBox";
+export * from "./CustomCard";
+export * from "./ProfilCard";
+export * from "./CustomFooter";
