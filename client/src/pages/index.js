@@ -1,6 +1,11 @@
 export * from "./Branches";
-export * from "./Categories";
+
+export * from "./CategoriesPages";
+export * from "./CategoriesPages/CreateCategories";
+
 export * from "./Coaches";
 export * from "./Home";
 export * from "./Members";
-export * from "./Tools";
+
+export * from "./ToolsPage";
+export * from "./ToolsPage/ToolsCreate";
