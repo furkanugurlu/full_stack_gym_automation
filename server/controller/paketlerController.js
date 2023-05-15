@@ -23,9 +23,9 @@ const packageCreate = (req, res) => {
 
 const packageUpdate = (req, res) => {
     console.log(req.body)
-    const { paketID, kategoriID, paketAdi, gun, ucret } = req?.body
+    const { id, kategoriID, paketAdi, gun, ucret } = req?.body
     const query = 'UPDATE uyelikpaketler SET  kategoriID= ?, paketAdi = ?,  gun = ? ,  ucret = ? WHERE paketID = ?;'
-    db.query(query, [kategoriID, paketAdi, gun, ucret, paketID], (err, result) => {
+    db.query(query, [kategoriID, paketAdi, gun, ucret, id], (err, result) => {
         if (!err) {
             res.send(result)
         }
@@ -34,13 +34,27 @@ const packageUpdate = (req, res) => {
 }
 
 const packageRemove = (req, res) => {
-    const { paketID } = req?.body
-    const query = 'DELETE FROM uyelikpaketler WHERE paketID=?'
-    db.query(query, [paketID], (err, result) => {
+    const { id } = req?.params
+    const query1 = 'DELETE FROM secilenpaket WHERE paketID=?'
+    const query2 = 'DELETE FROM uyelikpaketler WHERE paketID=?'
+    db.query(query1, [id], (err, result) => {
+        db.query(query2, [id], (err, result) => {
+            if (!err) {
+                res.send(result)
+            }
+            console.log(err)
+        })
+    })
+}
+
+const packageReadOnly = (req, res) => {
+    const { id } = req?.params
+    const query = 'SELECT * FROM uyelikpaketler WHERE paketId=?'
+    db.query(query, [id], (err, result) => {
         if (!err) {
             res.send(result)
         }
         console.log(err)
     })
 }
-module.exports = { packageRead, packageCreate, packageUpdate, packageRemove }
+module.exports = { packageRead, packageCreate, packageUpdate, packageRemove, packageReadOnly }

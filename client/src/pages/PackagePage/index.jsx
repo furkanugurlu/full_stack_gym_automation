@@ -1,48 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { getImage } from "../../constant";
 import api from "../../constant/api";
-import Helmet from "react-helmet";
+import { getImage } from "../../constant/index";
+import { useNavigate } from "react-router-dom";
 import { CategoriesItemList, PageTitle } from "../../components";
-import { Link, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
-const Tools = () => {
-  const [tools, setTools] = useState([]);
+const Package = () => {
+  const [packages, setPackage] = useState([]);
   const navigation = useNavigate();
 
   useEffect(() => {
     const getRequest = async () => {
-      const res = await api.get("furniture/read");
+      const res = await api.get("package/read");
       const newData = res.data.map((tool, i) => {
-        return { img: getImage(i, "sports-equipment"), ...tool };
+        return { img: getImage(i, "sports-package"), ...tool };
       });
-      setTools(newData);
+      setPackage(newData);
     };
     getRequest();
   }, []);
 
   const removeHandle = (id) => {
-    api.delete(`furniture/remove/${id}`).then((res) => {
-      const newCat = tools.filter((x) => x.esyaID !== id);
-      setTools(newCat);
+    api.delete(`package/remove/${id}`).then((res) => {
+      const newCat = packages.filter((x) => x.paketID !== id);
+      setPackage(newCat);
     });
   };
 
   const updateHandle = (id) => {
-    navigation(`/tools/update-tools/${id}`);
+    navigation(`/package/update-package/${id}`);
   };
-
   return (
     <div className="container flex flex-col md:container md:mx-auto">
       <Helmet>
-        <title>ArenaGYM - Eşyalar</title>
+        <title>ArenaGYM - Paketler</title>
       </Helmet>
-      <PageTitle title="Sport Aletleri" link="/tools/create-tools" />
+      <PageTitle title="Paketler" link="/package/create-package" />
 
       <CategoriesItemList
         remove
         update
         secondary
-        data={tools}
+        packagePage
+        data={packages}
         removeHandle={(id) => removeHandle(id)}
         updateHandle={(id) => updateHandle(id)}
       />
@@ -50,4 +50,4 @@ const Tools = () => {
   );
 };
 
-export { Tools };
+export { Package };

@@ -17,13 +17,14 @@ const coachCreate = (req, res) => {
         if (!err) {
             res.send(result)
         }
+        console.log(err)
     })
 }
 
 const coachUpdate = (req, res) => {
-    const { tcNo, adi, soyadi, mail, telNo, adres, dogumTarihi, sifre } = req?.body
-    const query = 'UPDATE antrenorler SET adi = ?,soyadi = ?, mail = ?,telNo = ?, adres = ?, dogumTarihi = ?, sifre = ? WHERE tcNo = ?;'
-    db.query(query, [adi, soyadi, mail, telNo, adres, dogumTarihi, sifre, tcNo], (err, result) => {
+    const { id, tcNo, adi, soyadi, mail, telNo, adres, dogumTarihi, sifre } = req?.body
+    const query = 'UPDATE antrenorler SET adi = ?,soyadi = ?, mail = ?,telNo = ?, adres = ?, dogumTarihi = ?, tcNo = ? , sifre = ? WHERE tcNo = ?;'
+    db.query(query, [adi, soyadi, mail, telNo, adres, dogumTarihi, tcNo, sifre, id], (err, result) => {
         if (!err) {
             res.send(result)
         }
@@ -32,13 +33,26 @@ const coachUpdate = (req, res) => {
 }
 
 const coachRemove = (req, res) => {
-    const { tcNo } = req?.body
-    const query = 'DELETE FROM antrenorler WHERE tcNo=?'
-    db.query(query, [tcNo], (err, result) => {
+    const { id } = req?.params
+    const query1 = 'DELETE FROM uyeantrenorkayit WHERE antTcNo=?'
+    const query2 = 'DELETE FROM antrenorler WHERE tcNo=?'
+    db.query(query1, [id], (err, result) => {
+        db.query(query2, [id], (err, result) => {
+            if (!err) {
+                res.send(result)
+            }
+            console.log(err)
+        })
+    })
+}
+
+const coachReadOnly = (req, res) => {
+    const { id } = req.params
+    const query = 'SELECT * FROM antrenorler WHERE tcNo = ?'
+    db.query(query, [id], (err, result) => {
         if (!err) {
             res.send(result)
         }
-        console.log(err)
     })
 }
-module.exports = { coachRead, coachCreate, coachUpdate, coachRemove }
+module.exports = { coachRead, coachCreate, coachUpdate, coachRemove, coachReadOnly }

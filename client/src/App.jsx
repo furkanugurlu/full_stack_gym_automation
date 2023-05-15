@@ -3,9 +3,9 @@ import Router from "./Router";
 
 function App() {
   return (
-    <div className="relative">
+    <div className="flex flex-col min-h-screen">
       <CustomHeader />
-      <div className="pt-[100px]">
+      <div className="pt-[100px] flex-grow">
         <Router />
       </div>
       <CustomFooter />

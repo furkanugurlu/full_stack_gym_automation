@@ -22,9 +22,9 @@ const branchCreate = (req, res) => {
 }
 
 const branchUpdate = (req, res) => {
-    const { bransID, kategoriID, bransAdi } = req?.body
-    const query = 'UPDATE branslar SET kategoriID = ?, bransAdi = ?,WHERE bransID = ?;'
-    db.query(query, [kategoriID, bransAdi, bransID], (err, result) => {
+    const { id, kategoriID, bransAdi } = req?.body
+    const query = 'UPDATE branslar SET kategoriID = ?, bransAdi =  ? WHERE bransID = ?'
+    db.query(query, [kategoriID, bransAdi, id], (err, result) => {
         if (!err) {
             res.send(result)
         }
@@ -33,13 +33,24 @@ const branchUpdate = (req, res) => {
 }
 
 const branchRemove = (req, res) => {
-    const { bransID } = req?.body
+    const { id } = req?.params
     const query = 'DELETE FROM branslar WHERE bransID=?'
-    db.query(query, [bransID], (err, result) => {
+    db.query(query, [id], (err, result) => {
         if (!err) {
             res.send(result)
         }
         console.log(err)
     })
 }
-module.exports = { branchRead, branchCreate, branchUpdate, branchRemove }
+
+const branchReadOnly = (req, res) => {
+    const { id } = req?.params
+    const query = 'SELECT * FROM branslar WHERE bransID=?'
+    db.query(query, [id], (err, result) => {
+        if (!err) {
+            res.send(result)
+        }
+        console.log(err)
+    })
+}
+module.exports = { branchRead, branchCreate, branchUpdate, branchRemove, branchReadOnly }

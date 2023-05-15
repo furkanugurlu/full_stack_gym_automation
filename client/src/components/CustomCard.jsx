@@ -1,8 +1,26 @@
 import React from "react";
+import { Modal } from "./Modal";
 
-const CustomCard = ({ title, url, price, email, date, marka, isMore }) => {
+const CustomCard = ({
+  title,
+  url,
+  price,
+  email,
+  date,
+  marka,
+  isMore,
+  detail,
+  id,
+  remove,
+  removeHandle,
+  update,
+  updateHandle,
+  day,
+}) => {
   const nn = new Date(date);
   const localDateString = nn.toLocaleDateString();
+  const [showModal, setShowModal] = React.useState(false);
+
   return (
     <div className="2xl:w-[350px] cursor-pointer  xl:w-[300px] lg:w-[300px] font-mono text-[#2D3748]   md:w-[340px] sm:w-[400px] w-[400px]  overflow-hidden group  bg-[#ECEDFF] border border-gray-200 rounded-lg shadow">
       <img
@@ -29,6 +47,11 @@ const CustomCard = ({ title, url, price, email, date, marka, isMore }) => {
             Alınma Tarihi:<span className="font-light">{localDateString}</span>
           </p>
         )}
+        {day && (
+          <p className="mb-3  font-bold ">
+            Gün:<span className="font-light">{day}</span>
+          </p>
+        )}
         {marka && (
           <p className="mb-3  font-bold ">
             Marka:<span className="font-light">{marka}</span>
@@ -36,8 +59,8 @@ const CustomCard = ({ title, url, price, email, date, marka, isMore }) => {
         )}
         {isMore && (
           <a
-            href=""
-            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#444bff] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            href={`/categories/detail/${id}`}
+            className="flex w-1/2 mb-3 items-center underline py-2 text-sm font-medium text-black  b rounded-lg "
           >
             Daha Fazla
             <svg
@@ -55,7 +78,32 @@ const CustomCard = ({ title, url, price, email, date, marka, isMore }) => {
             </svg>
           </a>
         )}
+        <div className="flex justify-end   items-center">
+          {remove && (
+            <button
+              onClick={() => setShowModal(true)}
+              className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-500 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none "
+            >
+              Sil
+            </button>
+          )}
+          {update && (
+            <button
+              onClick={() => updateHandle(id)}
+              className="inline-flex ml-3 items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:ring-4 focus:outline-none "
+            >
+              Düzenle
+            </button>
+          )}
+        </div>
       </div>
+      <Modal
+        onClickYes={() => removeHandle(id)}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        title="Uyarı"
+        des="Veri silmek istediğinizden eminmisiniz?"
+      />
     </div>
   );
 };
