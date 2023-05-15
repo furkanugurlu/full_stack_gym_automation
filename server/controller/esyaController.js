@@ -10,7 +10,6 @@ const furnitureRead = (req, res) => {
 }
 
 const furnitureCreate = (req, res) => {
-    console.log(req.body)
     const { esyaAdi, seriNo, marka, fiyat } = req?.body
     const alinmaTarihi = new Date()
     const query = 'INSERT INTO salonesyalar (esyaAdi,seriNo,marka ,fiyat, alinmaTarihi ) VALUES (?,?,?,?,?)'
@@ -34,13 +33,24 @@ const furnitureUpdate = (req, res) => {
 }
 
 const furnitureRemove = (req, res) => {
-    const { esyaID } = req?.body
+    const { id } = req?.params
     const query = 'DELETE FROM salonesyalar WHERE esyaID=?'
-    db.query(query, [esyaID], (err, result) => {
+    db.query(query, [id], (err, result) => {
         if (!err) {
             res.send(result)
         }
         console.log(err)
     })
 }
-module.exports = { furnitureRead, furnitureCreate, furnitureUpdate, furnitureRemove }
+
+const furnitureReadOnly = (req, res) => {
+    const { id } = req?.params
+    const query = 'SELECT * FROM salonesyalar WHERE esyaID=?'
+    db.query(query, [id], (err, result) => {
+        if (!err) {
+            res.send(result)
+        }
+        console.log(err)
+    })
+}
+module.exports = { furnitureRead, furnitureCreate, furnitureUpdate, furnitureRemove, furnitureReadOnly }

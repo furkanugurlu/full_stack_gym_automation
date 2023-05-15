@@ -33,13 +33,25 @@ const categoryUpdate = (req, res) => {
 }
 
 const categoryRemove = (req, res) => {
-    const { kategoriID } = req?.body
+    const { id } = req?.params
     const query = 'DELETE FROM kategoriler WHERE kategoriID=?'
-    db.query(query, [kategoriID], (err, result) => {
+    db.query(query, [id], (err, result) => {
         if (!err) {
             res.send(result)
         }
         console.log(err)
     })
 }
-module.exports = { categoryRead, categoryCreate, categoryUpdate, categoryRemove }
+
+const categoryReadOnly = (req, res) => {
+    const { id } = req.params
+    const query =
+        "SELECT c.kategoriAdi as kategoriAdi, IF(COUNT(b.bransID) > 0, JSON_ARRAYAGG(JSON_OBJECT('bransAdi', b.bransAdi, 'bransId', b.bransId )), NULL) as branslar ,IF(COUNT(p.paketID) > 0, JSON_ARRAYAGG(JSON_OBJECT('paketID', p.paketID, 'paketAdi', p.paketAdi, 'gun', p.gun , 'ucret' ,p.ucret )), NULL) as uyelikpaketler  FROM kategoriler c LEFT JOIN branslar b ON c.kategoriID = b.kategoriID LEFT JOIN uyelikpaketler p ON c.kategoriID = p.kategoriID  WHERE c.kategoriID = ?"
+    db.query(query, [id], (err, result) => {
+        if (!err) {
+            res.send(result)
+        }
+        console.log(err)
+    })
+}
+module.exports = { categoryRead, categoryCreate, categoryUpdate, categoryRemove, categoryReadOnly }

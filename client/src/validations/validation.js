@@ -7,6 +7,7 @@ Yup.setLocale({
   string: {
     min: "Bu alan minimum ${min} karakter olmalıdır",
     max: "Bu alan maximum ${max} karakter olmalıdır",
+    email: "Geçerli bir email giriniz.",
   },
 });
 

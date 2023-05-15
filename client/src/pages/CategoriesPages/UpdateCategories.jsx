@@ -1,34 +1,50 @@
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CategoriesValidation } from "../../validations";
 import { Input } from "../../components/FormItems";
 import { Helmet } from "react-helmet";
 import { Loader } from "../../components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../constant/api";
 
-const CreateCategories = () => {
-  const navigate = useNavigate();
+const UpdateCategories = () => {
+  const navigation = useNavigate();
+  const { id } = useParams();
+  const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const getTrainer = async () => {
+      const res = await api.get(`category/read/${id}`);
+      setCategories(res.data[0]);
+    };
+
+    getTrainer();
+  }, []);
 
   return (
     <div className="container mx-auto h-screen">
       <Helmet>
-        <title>ArenaGYM - Kategori Ekleme</title>
+        <title>ArenaGYM - Kategori Güncelle</title>
       </Helmet>
-      <h1 className="font-mono text-4xl  text-[#2D3748]  mb-4 font-bold">
-        - Kategori Ekle -
+      <h1 className="font-mono text-4xl mb-10 text-[#2D3748] font-bold">
+        - Kategori Güncelle -
       </h1>
       <Formik
-        initialValues={{ kategoriAdi: "" }}
+        initialValues={{ kategoriAdi: categories?.kategoriAdi || "" }}
         validationSchema={CategoriesValidation}
+        enableReinitialize
         onSubmit={(values, actions) => {
-          api
-            .post("category/create", values)
-            .then((res) => {
-              actions.setSubmitting(false);
-              navigate("/categories");
-            })
-            .catch((err) => {});
+          if (values?.kategoriAdi !== categories?.kategoriAdi) {
+            api
+              .put("category/update", { ...values, kategoriID: id })
+              .then((res) => {
+                actions.setSubmitting(false);
+                navigation("/categories");
+              })
+              .catch((err) => {});
+          } else {
+            alert("Herhangibir değişiklik yapmadınız.");
+            actions.setSubmitting(false);
+          }
         }}
       >
         {({ values, isSubmitting }) => (
@@ -39,7 +55,7 @@ const CreateCategories = () => {
                 type="submit"
                 className="flex justify-center items-center text-white h-10  bg-blue-700  hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
               >
-                {isSubmitting ? <Loader /> : "Ekle"}
+                {isSubmitting ? <Loader /> : "Güncelle"}
               </button>
               <button
                 type="reset"
@@ -48,7 +64,7 @@ const CreateCategories = () => {
                 Sıfırla
               </button>
               <button
-                onClick={() => navigate("/")}
+                onClick={() => navigation("/categories")}
                 className="flex justify-center items-center text-white h-10  bg-red-500  hover:bg-red-600 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2"
               >
                 Geri
@@ -61,4 +77,4 @@ const CreateCategories = () => {
   );
 };
 
-export { CreateCategories };
+export { UpdateCategories };

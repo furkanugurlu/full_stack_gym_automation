@@ -1,18 +1,23 @@
 import React from "react";
 import { useField, ErrorMessage } from "formik";
 
-const Input = ({ lable, ...props }) => {
+const Input = ({ col, label, ...props }) => {
   const [field, meta, helpers] = useField(props);
 
   return (
-    <div className="rounded-md shadow-sm">
+    <div className={`relative z-0 w-full mb-6 group ${col}`}>
+      <label htmlFor={`floating_${field?.name}`} className="font-mono ">
+        {label}
+      </label>
       <input
         {...field}
         {...props}
-        className={`w-full border-b outline-none   ${
-          meta?.error && meta?.touched ? "border-red-600" : "focus:border-black"
+        className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2  appearance-none   focus:outline-none focus:ring-0 group  ${
+          meta?.error && meta?.touched ? "border-red-600" : "border-gray-300"
         } `}
+        id={`floating_${field?.name}`}
       />
+
       <ErrorMessage
         name={field.name}
         component="small"
